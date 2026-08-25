@@ -1,7 +1,6 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-// TODO: REMPLACE PAR TES CLÉS SUPABASE (Settings > API)
-const supabaseUrl = 'https://TON_PROJET.supabase.co';
-const supabaseKey = 'TA_CLE_ANON';
+const supabaseUrl = 'https://arwrmenzaxpgojaixsff.supabase.co';
+const supabaseKey = 'sb_publishable_4A2BbpuR4KXu_S-xizg1OQ_KFKfnFD_';
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
