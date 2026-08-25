@@ -7,33 +7,45 @@ const rouletteResult = document.getElementById('roulette-result');
 
 let currentPrograms = [];
 
-// 1. LE DICTIONNAIRE DES LOGOS ET NUMÉROS TNT
+// 1. LE NOUVEAU DICTIONNAIRE (Logos ultra-fiables via Clearbit)
 const tntChannels = {
-    "TF1": { order: 1, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/TF1_logo_2013.svg/512px-TF1_logo_2013.svg.png" },
-    "France 2": { order: 2, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/France_2_logo_%282018%29.svg/512px-France_2_logo_%282018%29.svg.png" },
-    "France 3": { order: 3, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/France_3_logo_%282018%29.svg/512px-France_3_logo_%282018%29.svg.png" },
-    "Canal+": { order: 4, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Canal%2B_logo.svg/512px-Canal%2B_logo.svg.png" },
-    "France 5": { order: 5, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/France_5_logo_%282018%29.svg/512px-France_5_logo_%282018%29.svg.png" },
-    "M6": { order: 6, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/M6_logo_2009.svg/512px-M6_logo_2009.svg.png" },
-    "Arte": { order: 7, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Logo_Arte.svg/512px-Logo_Arte.svg.png" },
-    "C8": { order: 8, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/C8_logo_2016.svg/512px-C8_logo_2016.svg.png" },
-    "W9": { order: 9, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/W9_logo_2018.svg/512px-W9_logo_2018.svg.png" },
-    "TMC": { order: 10, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/TMC_logo_2016.svg/512px-TMC_logo_2016.svg.png" },
-    "TFX": { order: 11, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/TFX_logo_2018.svg/512px-TFX_logo_2018.svg.png" },
-    "NRJ 12": { order: 12, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/NRJ12_logo_2015.svg/512px-NRJ12_logo_2015.svg.png" },
-    "LCP": { order: 13, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/LCP_Assembl%C3%A9e_nationale_2019.svg/512px-LCP_Assembl%C3%A9e_nationale_2019.svg.png" },
-    "France 4": { order: 14, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/France_4_logo_%282018%29.svg/512px-France_4_logo_%282018%29.svg.png" },
-    "BFMTV": { order: 15, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/BFMTV_Logo_2023.svg/512px-BFMTV_Logo_2023.svg.png" },
-    "CNEWS": { order: 16, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/CNEWS_logo_2017.svg/512px-CNEWS_logo_2017.svg.png" },
-    "CSTAR": { order: 17, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/CStar_logo_2016.svg/512px-CStar_logo_2016.svg.png" },
-    "Gulli": { order: 18, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Gulli_logo_2022.svg/512px-Gulli_logo_2022.svg.png" },
-    "TF1 Séries Films": { order: 20, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/TF1_S%C3%A9ries_Films_logo_2018.svg/512px-TF1_S%C3%A9ries_Films_logo_2018.svg.png" },
-    "L'Équipe": { order: 21, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/L%27%C3%89quipe_logo_2015.svg/512px-L%27%C3%89quipe_logo_2015.svg.png" },
-    "6ter": { order: 22, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/6ter_logo_2012.svg/512px-6ter_logo_2012.svg.png" },
-    "RMC Story": { order: 23, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/RMC_Story_logo_2018.svg/512px-RMC_Story_logo_2018.svg.png" },
-    "RMC Découverte": { order: 24, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/RMC_D%C3%A9couverte_logo_2017.svg/512px-RMC_D%C3%A9couverte_logo_2017.svg.png" },
-    "Chérie 25": { order: 25, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Ch%C3%A9rie_25_logo_2015.svg/512px-Ch%C3%A9rie_25_logo_2015.svg.png" }
+    "TF1": { order: 1, logo: "https://logo.clearbit.com/tf1.fr" },
+    "France 2": { order: 2, logo: "https://logo.clearbit.com/france.tv" }, 
+    "France 3": { order: 3, logo: "https://logo.clearbit.com/france.tv" },
+    "Canal+": { order: 4, logo: "https://logo.clearbit.com/canalplus.com" },
+    "France 5": { order: 5, logo: "https://logo.clearbit.com/france.tv" },
+    "M6": { order: 6, logo: "https://logo.clearbit.com/m6.fr" },
+    "Arte": { order: 7, logo: "https://logo.clearbit.com/arte.tv" },
+    "C8": { order: 8, logo: "https://logo.clearbit.com/c8.fr" },
+    "W9": { order: 9, logo: "https://logo.clearbit.com/w9.fr" },
+    "TMC": { order: 10, logo: "https://logo.clearbit.com/tf1.fr" }, 
+    "TFX": { order: 11, logo: "https://logo.clearbit.com/tf1.fr" },
+    "NRJ 12": { order: 12, logo: "https://logo.clearbit.com/nrj12.fr" },
+    "LCP": { order: 13, logo: "https://logo.clearbit.com/lcp.fr" },
+    "France 4": { order: 14, logo: "https://logo.clearbit.com/france.tv" },
+    "BFMTV": { order: 15, logo: "https://logo.clearbit.com/bfmtv.com" },
+    "CNEWS": { order: 16, logo: "https://logo.clearbit.com/cnews.fr" },
+    "CSTAR": { order: 17, logo: "https://logo.clearbit.com/cstar.fr" },
+    "Gulli": { order: 18, logo: "https://logo.clearbit.com/gulli.fr" },
+    "TF1 Séries Films": { order: 20, logo: "https://logo.clearbit.com/tf1.fr" },
+    "L'Équipe": { order: 21, logo: "https://logo.clearbit.com/lequipe.fr" },
+    "6ter": { order: 22, logo: "https://logo.clearbit.com/6ter.fr" },
+    "RMC Story": { order: 23, logo: "https://logo.clearbit.com/rmcstory.bfmtv.com" },
+    "RMC Découverte": { order: 24, logo: "https://logo.clearbit.com/rmcdecouverte.bfmtv.com" },
+    "Chérie 25": { order: 25, logo: "https://logo.clearbit.com/cherie25.fr" }
 };
+
+// Fonction intelligente pour trouver la chaîne même si le nom varie
+function getChannelInfo(dbName) {
+    if (!dbName) return null;
+    const normalized = dbName.toLowerCase().trim();
+    for (const [key, info] of Object.entries(tntChannels)) {
+        if (normalized.includes(key.toLowerCase()) || key.toLowerCase().includes(normalized)) {
+            return { name: key, ...info };
+        }
+    }
+    return null;
+}
 
 // 2. CHARGEMENT DES DONNÉES
 async function loadPrograms() {
@@ -45,10 +57,12 @@ async function loadPrograms() {
 
     currentPrograms = (dbData && dbData.length > 0) ? dbData : getFallbackData();
     
-    // 🔥 La Magie du Tri : on ordonne les cartes selon le numéro de la chaîne TNT
+    // Tri avec le numéro de la chaîne (de 1 à 25)
     currentPrograms.sort((a, b) => {
-        const orderA = tntChannels[a.channel_logo]?.order || 99;
-        const orderB = tntChannels[b.channel_logo]?.order || 99;
+        const infoA = getChannelInfo(a.channel_logo);
+        const infoB = getChannelInfo(b.channel_logo);
+        const orderA = infoA ? infoA.order : 99;
+        const orderB = infoB ? infoB.order : 99;
         return orderA - orderB;
     });
 
@@ -88,15 +102,14 @@ function renderCards(programs, filterType) {
             ).join('');
         }
 
-        // 🎨 Gestion du vrai logo et du fond blanc pour qu'il ressorte bien
-        const channelInfo = tntChannels[prog.channel_logo];
+        // Le fameux logo (image 100% fiable)
+        const channelInfo = getChannelInfo(prog.channel_logo);
         const logoHtml = channelInfo && channelInfo.logo
-            ? `<img src="${channelInfo.logo}" alt="${prog.channel_logo}" class="max-w-full max-h-full p-1.5 object-contain">`
+            ? `<img src="${channelInfo.logo}" alt="${channelInfo.name}" class="w-full h-full object-cover rounded-lg">`
             : `<span class="text-xs text-center text-slate-800 break-words font-bold">${prog.channel_logo}</span>`;
 
-        // Petite pastille avec le numéro de la chaîne (ex: 1 pour TF1)
         const channelNumber = channelInfo 
-            ? `<span class="absolute -top-2 -left-2 bg-slate-700 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border border-slate-500 shadow-md">${channelInfo.order}</span>` 
+            ? `<span class="absolute -top-2 -left-2 bg-slate-700 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border border-slate-500 shadow-md z-10">${channelInfo.order}</span>` 
             : '';
 
         const cardHtml = `
@@ -105,8 +118,8 @@ function renderCards(programs, filterType) {
                     <div class="h-full bg-gradient-to-r from-blue-500 to-purple-500 progress-bar" style="width: ${progressPercent}%"></div>
                 </div>
                 <div class="flex gap-5 items-start">
-                    <!-- BLOC LOGO CHAÎNE -->
-                    <div class="relative w-14 h-14 rounded-xl bg-white flex items-center justify-center border border-slate-400 shrink-0 shadow-inner">
+                    
+                    <div class="relative w-14 h-14 rounded-xl bg-white flex items-center justify-center border border-slate-400 shrink-0 shadow-inner p-1">
                         ${channelNumber}
                         ${logoHtml}
                     </div>
@@ -157,7 +170,8 @@ btnRoulette.addEventListener('click', () => {
     setTimeout(() => {
         btnRoulette.classList.remove('animate-pulse');
         const randomProg = currentPrograms[Math.floor(Math.random() * currentPrograms.length)];
-        rouletteResult.innerHTML = `📺 Zappe sur <strong>${randomProg.channel_logo}</strong> pour <em>${randomProg.title}</em> !`;
+        const nomChaine = getChannelInfo(randomProg.channel_logo) ? getChannelInfo(randomProg.channel_logo).name : randomProg.channel_logo;
+        rouletteResult.innerHTML = `📺 Zappe sur <strong>${nomChaine}</strong> pour <em>${randomProg.title}</em> !`;
     }, 800);
 });
 
