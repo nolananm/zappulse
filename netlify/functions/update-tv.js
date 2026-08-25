@@ -6,7 +6,7 @@ export const config = {
 export default async (req, context) => {
     // 1. Tes clés intégrées
     const supabaseUrl = 'https://arwrmenzaxpgojaixsff.supabase.co/rest/v1/tv_programs';
-    const supabaseSecretKey = 'sb_secret_5paoguGIEpW7-X7spOETeA_W8d4sGOg';
+    const supabaseSecretKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFyd3JtZW56YXhwZ29qYWl4c2ZmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NzY4NDU4NiwiZXhwIjoyMTAzMjYwNTg2fQ.rfUpeoc4S0YTPMEtN2NclRXNg0x-mt7Qz-DJEDhFgS8';
     const TMDB_KEY = '23eea876b20c9ec911e1e6622854d6e1';
 
     const supabaseHeaders = {
