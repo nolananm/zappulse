@@ -1,24 +1,24 @@
-import { createClient } from '@supabase/supabase-js';
-
 // Configuration : Ce script s'exécutera tous les jours à 16h00 automatiquement
 export const config = {
     schedule: "0 16 * * *"
 };
 
 export default async (req, context) => {
-    // 1. Initialiser Supabase avec la clé SECRÈTE (pour avoir le droit d'écrire)
-    const supabaseUrl = 'https://arwrmenzaxpgojaixsff.supabase.co';
-    const supabaseSecretKey = 'sb_secret_5paoguGIEpW7-X7spOETeA_W8d4sGOg'; // <-- À REMPLACER
-    const supabase = createClient(supabaseUrl, supabaseSecretKey);
-
+    // 1. Tes clés intégrées
+    const supabaseUrl = 'https://arwrmenzaxpgojaixsff.supabase.co/rest/v1/tv_programs';
+    const supabaseSecretKey = 'sb_secret_5paoguGIEpW7-X7spOETeA_W8d4sGOg';
     const TMDB_KEY = '23eea876b20c9ec911e1e6622854d6e1';
+
+    const supabaseHeaders = {
+        'apikey': supabaseSecretKey,
+        'Authorization': `Bearer ${supabaseSecretKey}`,
+        'Content-Type': 'application/json'
+    };
 
     try {
         console.log("Démarrage de la mise à jour de la grille TV...");
 
-        // 2. RÉCUPÉRER LES HORAIRES 
-        // (Pour l'instant on simule 3 programmes pour créer la logique. 
-        // Plus tard, on remplacera ce tableau par un "fetch" vers un vrai fichier XMLTV).
+        // 2. RÉCUPÉRER LES HORAIRES (Données de test)
         const grilleTV = [
             { title: "Dune", channel: "TF1", start: "21:10", type: "Film" },
             { title: "Top Chef", channel: "M6", start: "21:10", type: "Divertissement" },
@@ -34,24 +34,20 @@ export default async (req, context) => {
             let synopsis = "Pas de résumé disponible pour ce programme.";
             let tags = [];
 
-            // On demande à l'API TMDB seulement si c'est un film
             if (prog.type === "Film") {
                 const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_KEY}&query=${encodeURIComponent(prog.title)}&language=fr-FR`;
                 const response = await fetch(searchUrl);
                 const data = await response.json();
 
-                // Si TMDB trouve le film, on récupère les vraies infos !
                 if (data.results && data.results.length > 0) {
                     const film = data.results[0];
-                    rating = film.vote_average.toFixed(1); // Arrondi à 1 décimale (ex: 8.1)
+                    rating = film.vote_average.toFixed(1);
                     synopsis = film.overview;
                     tags.push({ text: "Synopsis TMDB", color: "bg-blue-500/20 text-blue-400 border-blue-500/30" });
                 }
             }
 
-            // Création des dates de début et fin pour Supabase
             const startTime = new Date(`${today}T${prog.start}:00`).toISOString();
-            // On estime que le programme dure 2 heures (120 min) pour l'exemple
             const endTime = new Date(new Date(startTime).getTime() + 120 * 60000).toISOString(); 
 
             programmesEnrichis.push({
@@ -66,14 +62,25 @@ export default async (req, context) => {
             });
         }
 
-        // 4. INJECTER DANS SUPABASE
-        // On supprime d'abord les vieux programmes (pour faire place nette)
-        await supabase.from('tv_programs').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+        // 4. INJECTER DANS SUPABASE VIA L'API REST
+        
+        // A. On supprime les anciennes données (où l'id n'est pas nul)
+        await fetch(`${supabaseUrl}?id=not.is.null`, { 
+            method: 'DELETE', 
+            headers: supabaseHeaders 
+        });
 
-        // On insère les nouveaux programmes enrichis par TMDB
-        const { error } = await supabase.from('tv_programs').insert(programmesEnrichis);
+        // B. On insère les nouvelles données
+        const insertResponse = await fetch(supabaseUrl, {
+            method: 'POST',
+            headers: { ...supabaseHeaders, 'Prefer': 'return=minimal' },
+            body: JSON.stringify(programmesEnrichis)
+        });
 
-        if (error) throw error;
+        if (!insertResponse.ok) {
+            const errorDetail = await insertResponse.text();
+            throw new Error(`Erreur d'insertion: ${errorDetail}`);
+        }
 
         console.log("Mise à jour réussie avec succès !");
         return new Response("Mise à jour réussie !", { status: 200 });
