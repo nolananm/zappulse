@@ -8,31 +8,32 @@ const rouletteResult = document.getElementById('roulette-result');
 let currentPrograms = [];
 
 // 1. LE NOUVEAU DICTIONNAIRE (Logos ultra-fiables via Clearbit)
+// 1. LE NOUVEAU DICTIONNAIRE (Logos officiels Télérama ultra-rapides)
 const tntChannels = {
-    "TF1": { order: 1, logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWcumyL5r4CyKSxUNVJ03ehX31iteA7c7RPowA2HJfGQ&s" },
-    "France 2": { order: 2, logo: "https://logo.clearbit.com/france.tv" }, 
-    "France 3": { order: 3, logo: "https://logo.clearbit.com/france.tv" },
-    "Canal+": { order: 4, logo: "https://logo.clearbit.com/canalplus.com" },
-    "France 5": { order: 5, logo: "https://logo.clearbit.com/france.tv" },
-    "M6": { order: 6, logo: "https://logo.clearbit.com/m6.fr" },
-    "Arte": { order: 7, logo: "https://logo.clearbit.com/arte.tv" },
-    "C8": { order: 8, logo: "https://logo.clearbit.com/c8.fr" },
-    "W9": { order: 9, logo: "https://logo.clearbit.com/w9.fr" },
-    "TMC": { order: 10, logo: "https://logo.clearbit.com/tf1.fr" }, 
-    "TFX": { order: 11, logo: "https://logo.clearbit.com/tf1.fr" },
-    "NRJ 12": { order: 12, logo: "https://logo.clearbit.com/nrj12.fr" },
-    "LCP": { order: 13, logo: "https://logo.clearbit.com/lcp.fr" },
-    "France 4": { order: 14, logo: "https://logo.clearbit.com/france.tv" },
-    "BFMTV": { order: 15, logo: "https://logo.clearbit.com/bfmtv.com" },
-    "CNEWS": { order: 16, logo: "https://logo.clearbit.com/cnews.fr" },
-    "CSTAR": { order: 17, logo: "https://logo.clearbit.com/cstar.fr" },
-    "Gulli": { order: 18, logo: "https://logo.clearbit.com/gulli.fr" },
-    "TF1 Séries Films": { order: 20, logo: "https://logo.clearbit.com/tf1.fr" },
-    "L'Équipe": { order: 21, logo: "https://logo.clearbit.com/lequipe.fr" },
-    "6ter": { order: 22, logo: "https://logo.clearbit.com/6ter.fr" },
-    "RMC Story": { order: 23, logo: "https://logo.clearbit.com/rmcstory.bfmtv.com" },
-    "RMC Découverte": { order: 24, logo: "https://logo.clearbit.com/rmcdecouverte.bfmtv.com" },
-    "Chérie 25": { order: 25, logo: "https://logo.clearbit.com/cherie25.fr" }
+    "TF1": { order: 1, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/119.png" },
+    "France 2": { order: 2, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/4.png" },
+    "France 3": { order: 3, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/80.png" },
+    "Canal+": { order: 4, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/34.png" },
+    "France 5": { order: 5, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/47.png" },
+    "M6": { order: 6, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/118.png" },
+    "Arte": { order: 7, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/111.png" },
+    "C8": { order: 8, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/445.png" },
+    "W9": { order: 9, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/112.png" },
+    "TMC": { order: 10, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/160.png" },
+    "TFX": { order: 11, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/461.png" },
+    "NRJ 12": { order: 12, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/446.png" },
+    "LCP": { order: 13, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/234.png" },
+    "France 4": { order: 14, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/78.png" },
+    "BFMTV": { order: 15, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/481.png" },
+    "CNEWS": { order: 16, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/226.png" },
+    "CSTAR": { order: 17, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/458.png" },
+    "Gulli": { order: 18, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/482.png" },
+    "TF1 Séries Films": { order: 20, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/1404.png" },
+    "L'Équipe": { order: 21, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/1401.png" },
+    "6ter": { order: 22, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/1403.png" },
+    "RMC Story": { order: 23, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/1400.png" },
+    "RMC Découverte": { order: 24, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/1402.png" },
+    "Chérie 25": { order: 25, logo: "https://television.telerama.fr/sites/tr_master/files/sheet_media/tv/500x500/1399.png" }
 };
 
 // Fonction intelligente pour trouver la chaîne même si le nom varie
