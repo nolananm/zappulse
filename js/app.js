@@ -9,7 +9,7 @@ let currentPrograms = [];
 
 // 1. LE NOUVEAU DICTIONNAIRE (Logos ultra-fiables via Clearbit)
 const tntChannels = {
-    "TF1": { order: 1, logo: "https://logo.clearbit.com/tf1.fr" },
+    "TF1": { order: 1, logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWcumyL5r4CyKSxUNVJ03ehX31iteA7c7RPowA2HJfGQ&s" },
     "France 2": { order: 2, logo: "https://logo.clearbit.com/france.tv" }, 
     "France 3": { order: 3, logo: "https://logo.clearbit.com/france.tv" },
     "Canal+": { order: 4, logo: "https://logo.clearbit.com/canalplus.com" },
