@@ -7,32 +7,32 @@ const rouletteResult = document.getElementById('roulette-result');
 
 let currentPrograms = [];
 
-// 1. LE DICTIONNAIRE BLINDÉ (Miniatures PNG Wikipédia + Fallback)
+// 1. LE DICTIONNAIRE 100% CSS (Zéro image externe, zéro plantage)
 const tntChannels = {
-    "TF1": { order: 1, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/TF1_logo_2013.svg/512px-TF1_logo_2013.svg.png" },
-    "France 2": { order: 2, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/France_2_logo_%282018%29.svg/512px-France_2_logo_%282018%29.svg.png" },
-    "France 3": { order: 3, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/France_3_logo_%282018%29.svg/512px-France_3_logo_%282018%29.svg.png" },
-    "Canal+": { order: 4, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Canal%2B_logo.svg/512px-Canal%2B_logo.svg.png" },
-    "France 5": { order: 5, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/France_5_logo_%282018%29.svg/512px-France_5_logo_%282018%29.svg.png" },
-    "M6": { order: 6, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/M6_logo_2009.svg/512px-M6_logo_2009.svg.png" },
-    "Arte": { order: 7, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Logo_Arte.svg/512px-Logo_Arte.svg.png" },
-    "C8": { order: 8, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/C8_logo_2016.svg/512px-C8_logo_2016.svg.png" },
-    "W9": { order: 9, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/W9_logo_2018.svg/512px-W9_logo_2018.svg.png" },
-    "TMC": { order: 10, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/TMC_logo_2016.svg/512px-TMC_logo_2016.svg.png" },
-    "TFX": { order: 11, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/TFX_logo_2018.svg/512px-TFX_logo_2018.svg.png" },
-    "NRJ 12": { order: 12, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/NRJ12_logo_2015.svg/512px-NRJ12_logo_2015.svg.png" },
-    "LCP": { order: 13, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/LCP_Assembl%C3%A9e_nationale_2019.svg/512px-LCP_Assembl%C3%A9e_nationale_2019.svg.png" },
-    "France 4": { order: 14, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/France_4_logo_%282018%29.svg/512px-France_4_logo_%282018%29.svg.png" },
-    "BFMTV": { order: 15, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/BFMTV_Logo_2023.svg/512px-BFMTV_Logo_2023.svg.png" },
-    "CNEWS": { order: 16, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/CNEWS_logo_2017.svg/512px-CNEWS_logo_2017.svg.png" },
-    "CSTAR": { order: 17, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/CStar_logo_2016.svg/512px-CStar_logo_2016.svg.png" },
-    "Gulli": { order: 18, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Gulli_logo_2022.svg/512px-Gulli_logo_2022.svg.png" },
-    "TF1 Séries Films": { order: 20, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/TF1_S%C3%A9ries_Films_logo_2018.svg/512px-TF1_S%C3%A9ries_Films_logo_2018.svg.png" },
-    "L'Équipe": { order: 21, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/L%27%C3%89quipe_logo_2015.svg/512px-L%27%C3%89quipe_logo_2015.svg.png" },
-    "6ter": { order: 22, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/6ter_logo_2012.svg/512px-6ter_logo_2012.svg.png" },
-    "RMC Story": { order: 23, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/RMC_Story_logo_2018.svg/512px-RMC_Story_logo_2018.svg.png" },
-    "RMC Découverte": { order: 24, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/RMC_D%C3%A9couverte_logo_2017.svg/512px-RMC_D%C3%A9couverte_logo_2017.svg.png" },
-    "Chérie 25": { order: 25, logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Ch%C3%A9rie_25_logo_2015.svg/512px-Ch%C3%A9rie_25_logo_2015.svg.png" }
+    "TF1": { order: 1, color: "bg-blue-600 text-white", short: "TF1" },
+    "France 2": { order: 2, color: "bg-red-600 text-white", short: "F2" },
+    "France 3": { order: 3, color: "bg-blue-500 text-white", short: "F3" },
+    "Canal+": { order: 4, color: "bg-zinc-900 text-white", short: "C+" },
+    "France 5": { order: 5, color: "bg-green-600 text-white", short: "F5" },
+    "M6": { order: 6, color: "bg-zinc-100 text-slate-800", short: "M6" },
+    "Arte": { order: 7, color: "bg-orange-600 text-white", short: "ARTE" },
+    "C8": { order: 8, color: "bg-zinc-100 text-slate-800", short: "C8" },
+    "W9": { order: 9, color: "bg-purple-600 text-white", short: "W9" },
+    "TMC": { order: 10, color: "bg-red-700 text-white", short: "TMC" },
+    "TFX": { order: 11, color: "bg-blue-400 text-white", short: "TFX" },
+    "NRJ 12": { order: 12, color: "bg-red-500 text-white", short: "NRJ" },
+    "LCP": { order: 13, color: "bg-blue-800 text-white", short: "LCP" },
+    "France 4": { order: 14, color: "bg-purple-700 text-white", short: "F4" },
+    "BFMTV": { order: 15, color: "bg-blue-500 text-white", short: "BFM" },
+    "CNEWS": { order: 16, color: "bg-zinc-900 text-white", short: "NEWS" },
+    "CSTAR": { order: 17, color: "bg-teal-500 text-white", short: "C*" },
+    "Gulli": { order: 18, color: "bg-green-400 text-white", short: "GULI" },
+    "TF1 Séries Films": { order: 20, color: "bg-blue-300 text-slate-900", short: "TF1S" },
+    "L'Équipe": { order: 21, color: "bg-red-600 text-white", short: "EQP" },
+    "6ter": { order: 22, color: "bg-blue-400 text-white", short: "6ter" },
+    "RMC Story": { order: 23, color: "bg-orange-500 text-white", short: "RMCS" },
+    "RMC Découverte": { order: 24, color: "bg-amber-600 text-white", short: "RMCD" },
+    "Chérie 25": { order: 25, color: "bg-pink-600 text-white", short: "CH25" }
 };
 
 // Recherche intelligente du nom de la chaîne
@@ -101,14 +101,15 @@ function renderCards(programs, filterType) {
             ).join('');
         }
 
-        // L'ASTUCE ANTI-CASSE : Si l'image plante, le onerror prend le relais instantanément
+        // LA SOLUTION ULTIME : Le logo généré en pur code CSS
         const channelInfo = getChannelInfo(prog.channel_logo);
-        const logoHtml = channelInfo && channelInfo.logo
-            ? `<img src="${channelInfo.logo}" alt="${channelInfo.name}" class="w-full h-full object-contain p-1" onerror="this.onerror=null; this.outerHTML='<span class=\\'text-[10px] flex items-center justify-center text-center text-slate-800 break-words font-extrabold leading-tight w-full h-full\\'>${prog.channel_logo.replace(/'/g, "")}</span>';">`
-            : `<span class="text-[10px] flex items-center justify-center text-center text-slate-800 break-words font-extrabold leading-tight w-full h-full">${prog.channel_logo}</span>`;
+        const logoClasses = channelInfo ? channelInfo.color : "bg-slate-700 text-white";
+        const shortName = channelInfo ? channelInfo.short : prog.channel_logo.substring(0, 4).toUpperCase();
+        
+        const logoHtml = `<div class="w-full h-full rounded-lg flex items-center justify-center font-black text-[13px] tracking-tighter ${logoClasses}">${shortName}</div>`;
 
         const channelNumber = channelInfo 
-            ? `<span class="absolute -top-2 -left-2 bg-slate-700 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border border-slate-500 shadow-md z-10">${channelInfo.order}</span>` 
+            ? `<span class="absolute -top-2 -left-2 bg-slate-800 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border border-slate-600 shadow-md z-10">${channelInfo.order}</span>` 
             : '';
 
         const cardHtml = `
@@ -118,7 +119,8 @@ function renderCards(programs, filterType) {
                 </div>
                 <div class="flex gap-5 items-start">
                     
-                    <div class="relative w-14 h-14 rounded-xl bg-white flex items-center justify-center border border-slate-400 shrink-0 shadow-inner p-1">
+                    <!-- LE CONTENEUR DU LOGO CSS -->
+                    <div class="relative w-14 h-14 rounded-xl flex items-center justify-center shrink-0 shadow-inner p-1 bg-white/5 border border-white/10">
                         ${channelNumber}
                         ${logoHtml}
                     </div>
